@@ -16,12 +16,18 @@
 
     <div class="product-info">
       <div class="name">
-        <h3>{{ product.name }}</h3>
+        <nuxt-link :to="`/products/${product.id}`">
+          {{ product.name }}
+        </nuxt-link>
       </div>
       <ul class="info">
         <li class="category">Категория: {{ product.category }}</li>
         <li class="manufacturer">Производител: {{ product.manufacturer }}</li>
-        <li class="color">Цвят: {{ product.color }}</li>
+        <li class="color">Цвят: <div
+            :style='{backgroundColor: color}'
+            class="color-pick"
+          ></div>
+        </li>
       </ul>
     </div>
 
@@ -29,9 +35,13 @@
       <div class="price">
         <p>{{ product.price }}</p>
       </div>
-      <button class="view-more">
+      <nuxt-link
+        :to="`/products/${product.id}`"
+        tag="button"
+        class="view-more"
+      >
         Виж повече
-      </button>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -42,6 +52,11 @@ export default {
   computed: {
     layout() {
       return this.$store.getters["products/getView"];
+    },
+    color() {
+      return typeof this.product.color === "object"
+        ? this.product.color[0]
+        : this.product.color;
     }
   }
 };
@@ -49,6 +64,34 @@ export default {
 
 <style scoped lang="scss">
 .product-item {
+  .product-info {
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      right: 1px;
+      top: -5px;
+      background: red;
+      color: #fff;
+      font-size: 12px;
+      padding: 0 10px;
+    }
+  }
+  &.featured {
+    .product-info {
+      &:before {
+        content: "Препоръчан";
+        background: darkgreen;
+      }
+    }
+  }
+  &.inactive {
+    .product-info {
+      &:before {
+        content: "Изчерпано";
+      }
+    }
+  }
   display: flex;
   flex-basis: 100%;
   border: 1px solid #f3f3f3;
@@ -60,8 +103,16 @@ export default {
     margin: 5px 0px;
     flex-basis: 20%;
     padding: 0 5px;
+    position: relative;
     img {
       max-width: 100%;
+      max-height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
     }
   }
   .product-info {
@@ -70,14 +121,25 @@ export default {
     padding: 10px 5px;
     flex-basis: 53%;
     .name {
-      margin-bottom: 15px;
-      h3 {
+      a {
         color: #7986cb;
         border-bottom: 1px solid #f3f3f3;
         margin: 0px;
+        margin-bottom: 15px;
         padding-bottom: 15px;
         line-height: 1;
+        font-size: 18px;
+        font-weight: 600;
+        text-decoration: none;
+        display: block;
       }
+    }
+    .color-pick {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border: 1px solid;
+      margin-left: 5px;
     }
     ul {
       margin: 0;
@@ -126,6 +188,15 @@ export default {
     .product-image {
       flex-basis: 100%;
       display: block;
+      img {
+        max-width: 100%;
+        width: auto;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+        position: unset;
+        transform: none;
+      }
     }
     .product-info {
       flex-basis: 100%;

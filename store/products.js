@@ -1,5 +1,6 @@
 export const state = () => ({
   products: null,
+  product: null,
   filteredProducts: [],
   filters: {
     category: [],
@@ -43,15 +44,6 @@ export const mutations = {
     };
   },
 
-  filterResults(state, context, filters) {
-    if (state.filters.category !== undefined) {
-      state.filteredProducts = state.products.filter((product) => {
-        if (state.filters.category.includes(product.category)) {
-          return product;
-        }
-      });
-    }
-  },
   addFilterItem(state, obj) {
     let array = obj.category === "category"
       ? state.filters.category : [] ||
@@ -73,16 +65,16 @@ export const mutations = {
     let products = state.products;
 
     state.filteredProducts = products.filter(elem => {
-      if (state.filters.manufacturer.includes(elem.manufacturer) && !state.filters.category.length) {
-        return elem;
-      }
-      if (state.filters.category.includes(elem.category) && !state.filters.manufacturer.length) {
-        return elem;
-      }
-      if (state.filters.category.includes(elem.category) && state.filters.manufacturer.includes(elem.manufacturer)) {
-        return elem;
-      }
-    })
+      return state.filters.manufacturer.includes(elem.manufacturer)
+        && !state.filters.category.length // ONLY MANUFACTURERS
+        ? elem : false ||
+          state.filters.category.includes(elem.category)
+          && !state.filters.manufacturer.length // ONLY CATEGORIES
+          ? elem : false ||
+            state.filters.category.includes(elem.category)
+            && state.filters.manufacturer.includes(elem.manufacturer) // BOTH FILTERS
+            ? elem : false;
+    });
 
     this.app.router.push({
       path: '/products',
@@ -91,6 +83,9 @@ export const mutations = {
       }
     });
   },
+  findProduct(state, id) {
+    state.product = state.products.find(elem => elem.id === id);
+  }
 };
 
 export const actions = {
@@ -123,10 +118,16 @@ export const actions = {
   },
   filterProducts({ commit }, category) {
     commit('filterProducts');
+  },
+  findProduct({ commit }, id) {
+    commit('findProduct', id);
   }
 };
 
 export const getters = {
+  getAllProducts(state) {
+    return state.products;
+  },
   getProducts(state) {
     return state.filteredProducts.length
       ? setImmediate.filterProducts
@@ -143,5 +144,8 @@ export const getters = {
   },
   getFilters(state) {
     return state.filters;
+  },
+  getProduct(state) {
+    return state.product;
   }
 };

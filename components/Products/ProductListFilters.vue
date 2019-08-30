@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     products() {
-      return this.$store.getters["products/getProducts"];
+      return this.$store.getters["products/getAllProducts"];
     }
   },
   methods: {

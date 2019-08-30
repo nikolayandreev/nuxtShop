@@ -5,7 +5,7 @@
       type="checkbox"
       :name="name"
       :id="filter"
-      :checked="checked"
+      :checked="checked(category, filter)"
     >
     <label :for="filter">{{filter}}</label>
   </div>
@@ -26,12 +26,15 @@ export default {
       type: String
     }
   },
-  data() {
-    return {
-      checked: false
-    };
-  },
+  computed: {},
   methods: {
+    checked(cat, val) {
+      if (Object.entries(this.$route.query).length !== 0) {
+        if (this.$route.query[cat]) {
+          return this.$route.query[cat].includes(val);
+        }
+      }
+    },
     addFilters(category, parameter, event) {
       if (!event.target.checked) {
         this.$emit("addFilter", {
