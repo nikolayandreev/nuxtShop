@@ -8,10 +8,12 @@
     }"
   >
     <div class="product-image">
-      <img
-        :src="product.picture"
-        :alt="product.name"
-      />
+      <nuxt-link :to="`/products/${product.id}`">
+        <img
+          :src="product.picture"
+          :alt="product.name"
+        />
+      </nuxt-link>
     </div>
 
     <div class="product-info">
@@ -35,13 +37,10 @@
       <div class="price">
         <p>{{ product.price }}</p>
       </div>
-      <nuxt-link
-        :to="`/products/${product.id}`"
-        tag="button"
-        class="view-more"
-      >
-        Виж повече
-      </nuxt-link>
+      <button
+        class="cart-add"
+        @click="addToCart"
+      >Купи</button>
     </div>
   </div>
 </template>
@@ -57,6 +56,11 @@ export default {
       return typeof this.product.color === "object"
         ? this.product.color[0]
         : this.product.color;
+    }
+  },
+  methods: {
+    addToCart() {
+      this.$store.dispatch("cart/addProductToCart", this.product);
     }
   }
 };
@@ -156,28 +160,18 @@ export default {
       content: "";
     }
     .price {
-      color: #e53935;
+      color: #1e0606;
       font-size: 24px;
     }
-    .view-more {
-      border: none;
-      outline: none;
-      padding: 10px 15px;
-      font-weight: bolder;
-      text-transform: uppercase;
-      box-shadow: none;
-      background: white;
-      border: 1px solid #0d47a1;
-      color: #0d47a1;
-      transition: 0.2s all;
+    button {
+      flex-basis: 50%;
+      background: #e53935;
       cursor: pointer;
-      &:hover,
-      &:focus {
-        background: #0d47a1;
-        border: 1px solid #fff;
-        color: #fff;
-        transition: 0.3s all;
-      }
+      color: #fff;
+      width: 90%;
+      padding: 10px 0px;
+      border: none;
+      font-size: 18px;
     }
   }
   &.sm {

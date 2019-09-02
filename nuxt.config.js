@@ -36,6 +36,7 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [
+    { src: '~/plugins/owl-carousel.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

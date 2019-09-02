@@ -1,9 +1,19 @@
 <template>
   <div>
-    <nuxt-link to="/products">Products</nuxt-link>
+    <FeaturedProductsSlider :featuredProducts="featuredProducts" />
   </div>
 </template>
 
 <script>
-export default {};
+import FeaturedProductsSlider from "~/components/Products/FeaturedProductsSlider";
+export default {
+  components: {
+    FeaturedProductsSlider
+  },
+  computed: {
+    featuredProducts() {
+      return this.$store.getters["products/getFeaturedProducts"];
+    }
+  }
+};
 </script>

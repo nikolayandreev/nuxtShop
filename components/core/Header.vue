@@ -11,10 +11,27 @@
     <nav class="navigation">
       <ul>
         <li>
-          <nuxt-link to="/" exact>Home</nuxt-link>
+          <nuxt-link
+            to="/"
+            exact
+          >Начало</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/products">Products</nuxt-link>
+          <nuxt-link to="/products">Продукти</nuxt-link>
+        </li>
+        <li class="cart">
+          <div
+            class="cart-link"
+            @click.self="showCart = !showCart"
+          >
+            <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+            Количка ({{cartProductsLength}})
+            <CartModalContent
+              v-if="showCart"
+              :productsPrice="productsPrice"
+              :cartProducts="cartProducts"
+            />
+          </div>
         </li>
       </ul>
     </nav>
@@ -22,7 +39,29 @@
 </template>
 
 <script>
-export default {};
+import CartModalContent from "~/components/Cart/CartModalContent";
+
+export default {
+  data() {
+    return {
+      showCart: false
+    };
+  },
+  components: {
+    CartModalContent
+  },
+  computed: {
+    cartProductsLength() {
+      return this.$store.getters["cart/getProductsCount"];
+    },
+    productsPrice() {
+      return this.$store.getters["cart/getProductsPrice"];
+    },
+    cartProducts() {
+      return this.$store.getters["cart/getProducts"];
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -33,6 +72,9 @@ export default {};
   padding: 0px 20px;
   align-items: center;
   background: #0d47a1;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
   .logo {
     flex-basis: 20%;
     font-size: 20px;
@@ -70,6 +112,26 @@ export default {};
           &:focus,
           &.nuxt-link-active {
             background: #1a237e;
+          }
+        }
+        &.cart {
+          position: relative;
+          cursor: pointer;
+          .cart-link {
+            display: block;
+            padding: 20px 15px;
+            background: #fff;
+          }
+          .cart-content {
+            position: absolute;
+            width: 300px;
+            right: 0;
+            background: #fff;
+            top: 105%;
+            border: 1px solid #f3f3f3;
+            z-index: 9;
+            padding: 30px 20px;
+            box-shadow: 0px 3px 13px #000;
           }
         }
       }

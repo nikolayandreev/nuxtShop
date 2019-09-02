@@ -13,29 +13,18 @@ export const mutations = {
   setProducts(state, products) {
     state.products = products;
   },
-  insertProduct(state, product) {
-    state.products.push(product);
-  },
-  deleteProduct(state, product) {
-    const index = state.products.findIndex(elem => elem.id == product.id);
-    state.products.splice(index, 1);
-  },
   changeView(state, view) {
     state.view = view;
   },
   sortByPrice(state, sort) {
-    state.products.sort((A, B) => {
+    let array = state.filteredProducts.length
+      ? state.filteredProducts
+      : state.products;
+    array.sort((A, B) => {
       let priceA = parseFloat(A.price);
       let priceB = parseFloat(B.price);
       return sort == 1 ? priceA - priceB : priceA + priceB;
     });
-  },
-  sortyByCategory(state, category) {
-    for (let key in categories) {
-      state.filteredProducts = state.products.filter((elem) => {
-        return elem.category === categories[key];
-      });
-    }
   },
   setFilters(state, obj) {
     state.filters = {
@@ -147,5 +136,8 @@ export const getters = {
   },
   getProduct(state) {
     return state.product;
+  },
+  getFeaturedProducts(state) {
+    return state.products.filter(elem => elem.isFeatured === true);
   }
 };

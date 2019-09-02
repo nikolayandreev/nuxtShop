@@ -46,7 +46,7 @@
           </ul>
           <div class="price">
             <span>{{ product.price }}</span>
-            <button>Купи</button>
+            <button @click="addToCart">Купи</button>
           </div>
         </div>
         <div class="item-full">
@@ -64,6 +64,11 @@ export default {
     return {
       id: this.$route.params.id
     };
+  },
+  methods: {
+    addToCart() {
+      this.$store.dispatch("cart/addProductToCart", this.product);
+    }
   },
   computed: {
     product() {

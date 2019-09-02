@@ -21,6 +21,9 @@ html {
   padding: 0;
   max-width: 100%;
 }
+.main {
+  padding-top: 59px;
+}
 body {
   overflow-x: hidden;
   * {
