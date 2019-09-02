@@ -52,26 +52,16 @@ export default {
   },
   watch: {
     selectedCategories() {
-      this.$router.push({
-        path: "/products",
-        query: {
-          ...this.$router.query,
-          category: this.selectedCategories,
-          manufacturer: this.selectedManufacturers
-        }
+      this.$store.dispatch("products/filterResults", {
+        category: this.selectedCategories,
+        manufacturer: this.selectedManufacturers
       });
-      this.$store.dispatch("products/filterResults");
     },
     selectedManufacturers() {
-      this.$router.push({
-        path: "/products",
-        query: {
-          ...this.$router.query,
-          manufacturer: this.selectedManufacturers,
-          category: this.selectedCategories
-        }
+      this.$store.dispatch("products/filterResults", {
+        manufacturer: this.selectedManufacturers,
+        category: this.selectedCategories
       });
-      this.$store.dispatch("products/filterResults");
     }
   },
   computed: {

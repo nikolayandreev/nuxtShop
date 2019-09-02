@@ -2,10 +2,8 @@ export const state = () => ({
   products: null,
   product: null,
   filteredProducts: [],
-  filters: {
-    category: [],
-    manufacturer: [],
-  },
+  filteredByCategory: [],
+  filteredByManufacturer: [],
   view: 'List',
 });
 
@@ -72,13 +70,52 @@ export const mutations = {
       }
     });
   },
-  filterResults(state) {
-    setTimeout(() => {
-      console.log(this.app.router.history.current.query);
-    }, 500)
+  filterResults(state, criterias) {
+    let catFilters, manFilters;
+
+    for (let category of criterias.category) {
+      catFilters = state.products.map(elem => {
+        if (elem.category === category) {
+          if (!state.filteredByCategory.includes(elem)) {
+            state.filteredByCategory.push(elem);
+          }
+        }
+      });
+    };
+
+    for (let manufacturer of criterias.manufacturer) {
+      manFilters = state.products.map(elem => {
+        if (elem.manufacturer === manufacturer) {
+          if (!state.filteredByManufacturer.includes(elem)) {
+            state.filteredByManufacturer.push(elem);
+          }
+        }
+      })
+    };
+    state.filteredByCategory = catFilters;
+    state.filteredByManufacturer = manFilters;
+    console.log(state.filteredByCategory);
+    console.log(state.filteredByManufacturer);
+    // searchCriterias = this.app.router.history.current.query;
+    // for (let category of searchCriterias.category) {
+    //   console.log(category);
+    //   test = state.products.filter(elem => {
+    //     if (elem.category === category) {
+    //       return elem;
+    //     }
+    //   });
+
+    // }
+    // state.filteredProducts = test;
+    // console.log(test);
+
+
   },
   findProduct(state, id) {
     state.product = state.products.find(elem => elem.id === id);
+  },
+  setFilters(state, products) {
+    state.filteredProducts = products;
   }
 };
 
@@ -116,8 +153,8 @@ export const actions = {
   findProduct({ commit }, id) {
     commit('findProduct', id);
   },
-  filterResults({ commit }) {
-    commit('filterResults');
+  filterResults({ commit }, criterias) {
+    commit('filterResults', criterias);
   }
 };
 
