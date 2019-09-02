@@ -1,54 +1,38 @@
 <template>
   <div class="filter-item">
-    <input
-      @change="addFilters(category, filter, $event)"
-      type="checkbox"
-      :name="name"
-      :id="filter"
-      :checked="checked(category, filter)"
-    >
-    <label :for="filter">{{filter}}</label>
+    <label>
+      <input
+        type="checkbox"
+        :value="val"
+        v-model="checked"
+        @change="onChange"
+      />
+      <slot></slot>
+    </label>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    filter: {
-      type: String,
-      required: true
-    },
-    category: {
-      type: String,
-      required: true
-    },
-    name: {
-      type: String
+  props: ["value", "val"],
+  data() {
+    return {
+      checkedProxy: null
+    };
+  },
+  computed: {
+    checked: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.checkedProxy = val;
+      }
     }
   },
-  computed: {},
   methods: {
-    checked(cat, val) {
-      if (Object.entries(this.$route.query).length !== 0) {
-        if (this.$route.query[cat]) {
-          return this.$route.query[cat].includes(val);
-        }
-      }
-    },
-    addFilters(category, parameter, event) {
-      if (!event.target.checked) {
-        this.$emit("addFilter", {
-          category: category,
-          filter: parameter,
-          action: "remove"
-        });
-      } else {
-        this.$emit("addFilter", {
-          category: category,
-          filter: parameter,
-          action: "add"
-        });
-      }
+    onChange: function(e) {
+      this.$emit("input", this.checkedProxy);
     }
   }
 };

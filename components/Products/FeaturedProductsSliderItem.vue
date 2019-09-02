@@ -40,16 +40,17 @@ export default {
   margin: 0 10px;
   height: 100%;
   .image {
-    padding: 15px;
+    padding: 0 15px;
     img {
       max-width: 100%;
     }
   }
   .title {
     border-top: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
+    min-height: 68px;
     a {
       color: #7986cb;
-      border-bottom: 1px solid #f3f3f3;
       margin: 0px;
       padding: 15px;
       line-height: 1;
@@ -75,6 +76,7 @@ export default {
       padding: 10px 0;
       border: none;
       font-size: 18px;
+      cursor: pointer;
     }
   }
 }

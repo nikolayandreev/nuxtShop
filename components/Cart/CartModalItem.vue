@@ -1,10 +1,12 @@
 <template>
   <div class="item">
     <div class="image">
-      <img
-        :src="product.picture"
-        :alt="product.name"
-      />
+      <nuxt-link :to="`/products/${product.id}`">
+        <img
+          :src="product.picture"
+          :alt="product.name"
+        />
+      </nuxt-link>
     </div>
     <div class="title">
       <nuxt-link :to="`/products/${product.id}`">

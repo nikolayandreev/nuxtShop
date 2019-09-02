@@ -72,6 +72,11 @@ export const mutations = {
       }
     });
   },
+  filterResults(state) {
+    setTimeout(() => {
+      console.log(this.app.router.history.current.query);
+    }, 500)
+  },
   findProduct(state, id) {
     state.product = state.products.find(elem => elem.id === id);
   }
@@ -110,6 +115,9 @@ export const actions = {
   },
   findProduct({ commit }, id) {
     commit('findProduct', id);
+  },
+  filterResults({ commit }) {
+    commit('filterResults');
   }
 };
 

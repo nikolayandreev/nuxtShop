@@ -5,24 +5,28 @@
       <h3>Категория</h3>
       <div class="filter-items">
         <ProductListFiltersItem
-          @addFilter="modifyFilters($event)"
           v-for="category in categories"
-          :filter="category"
-          category="category"
           :key="category"
-        />
+          :val="category"
+          v-model="selectedCategories"
+        >
+          {{category}}
+        </ProductListFiltersItem>
+        {{selectedCategories}}
       </div>
     </div>
     <div class="filter-group">
       <h3>Производител</h3>
       <div class="filter-items">
         <ProductListFiltersItem
-          @addFilter="modifyFilters($event)"
           v-for="manufacturer in manufacturers"
-          :filter="manufacturer"
-          category="manufacturer"
           :key="manufacturer"
-        />
+          :val="manufacturer"
+          v-model="selectedManufacturers"
+        >
+          {{manufacturer}}
+        </ProductListFiltersItem>
+        {{selectedManufacturers}}
       </div>
     </div>
     <div class="filter-group">
@@ -39,12 +43,36 @@ export default {
     return {
       manufacturers: [],
       categories: [],
-      filteredCategories: [],
-      filteredManufacturers: []
+      selectedCategories: [],
+      selectedManufacturers: []
     };
   },
   components: {
     ProductListFiltersItem
+  },
+  watch: {
+    selectedCategories() {
+      this.$router.push({
+        path: "/products",
+        query: {
+          ...this.$router.query,
+          category: this.selectedCategories,
+          manufacturer: this.selectedManufacturers
+        }
+      });
+      this.$store.dispatch("products/filterResults");
+    },
+    selectedManufacturers() {
+      this.$router.push({
+        path: "/products",
+        query: {
+          ...this.$router.query,
+          manufacturer: this.selectedManufacturers,
+          category: this.selectedCategories
+        }
+      });
+      this.$store.dispatch("products/filterResults");
+    }
   },
   computed: {
     products() {
@@ -69,20 +97,6 @@ export default {
       this.categories = this.categories.filter(
         (elem, index, self) => self.indexOf(elem) === index
       );
-    },
-    modifyFilters(event) {
-      if (event.action !== "remove") {
-        this.$store.dispatch("products/addFilterItem", {
-          elem: event.filter,
-          category: event.category
-        });
-      } else {
-        this.$store.dispatch("products/removeFilterItem", {
-          elem: event.filter,
-          category: event.category
-        });
-      }
-      this.$store.dispatch("products/filterProducts", event.category);
     }
   },
   created() {
