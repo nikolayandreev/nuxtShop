@@ -1,6 +1,6 @@
-# List_v3
+# nuxtShop
 
-> My kryptonian Nuxt.js project
+> A playground project for basic eCommerce functionalities, like cart, filters and sorting of products.
 
 ## Build Setup
 
@@ -18,5 +18,12 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
+#DEMO:
+## 1.Home, simple slider with add to cart.
+![home](https://raw.githubusercontent.com/nikolayandreev/nuxtShop/master/static/1.JPG)
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## 2.Products page with filters, and sorting functionalities.
+![products](https://raw.githubusercontent.com/nikolayandreev/nuxtShop/master/static/2.JPG)
+
+## 3.Product inner page.
+![productpage](https://raw.githubusercontent.com/nikolayandreev/nuxtShop/master/static/3.JPG)
