@@ -2,8 +2,6 @@ export const state = () => ({
   products: null,
   product: null,
   filteredProducts: [],
-  filteredByCategory: [],
-  filteredByManufacturer: [],
   view: 'List',
 });
 
