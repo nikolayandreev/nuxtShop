@@ -14,6 +14,25 @@
       </nuxt-link>
       <small class="single-price">{{ product.price }}</small>
     </div>
+    <div class="quantity">
+      <span
+        class="up"
+        @click="quantityIncrease"
+      >
+        <font-awesome-icon :icon="['fas', 'caret-up']" />
+      </span>
+      <input
+        type="text"
+        :value="quantity"
+        readonly
+      />
+      <span
+        class="down"
+        @click="quantityDecrease"
+      >
+        <font-awesome-icon :icon="['fas', 'caret-down']" />
+      </span>
+    </div>
     <div class="removeLink">
       <button @click="removeProductFromCart">
         <font-awesome-icon :icon="['fas', 'trash']" />
@@ -28,6 +47,23 @@ export default {
   methods: {
     removeProductFromCart() {
       this.$store.dispatch("cart/removeProductFromCart", this.product);
+    },
+    quantityIncrease($event) {
+      this.$store.dispatch("cart/quantityChanged", {
+        product: this.product,
+        quantity: this.quantity + 1
+      });
+    },
+    quantityDecrease($event) {
+      this.$store.dispatch("cart/quantityChanged", {
+        product: this.product,
+        quantity: this.quantity - 1
+      });
+    }
+  },
+  computed: {
+    quantity() {
+      return this.$store.getters["cart/getProductQuantity"](this.product);
     }
   }
 };
@@ -54,8 +90,8 @@ export default {
   }
   .title {
     text-align: left;
-    flex-basis: 70%;
-    padding-left: 10px;
+    flex-basis: 60%;
+    padding-left: 5px;
     a {
       flex-basis: 100%;
       font-size: 11px;
@@ -68,6 +104,17 @@ export default {
       color: #9d2929;
       display: block;
       font-size: 11px;
+    }
+  }
+  .quantity {
+    flex-basis: 10%;
+    position: relative;
+    text-align: center;
+    input {
+      width: 100%;
+      border: none;
+      background: none;
+      text-align: center;
     }
   }
   .removeLink {

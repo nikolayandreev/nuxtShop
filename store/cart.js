@@ -5,8 +5,13 @@ export const state = () => ({
 
 export const mutations = {
     addProductToCart(state, product) {
-        if (!state.products.includes(product)) {
-            state.products.push(product);
+        const productAdded = state.products.find(
+            elem => elem.id === product.id
+        );
+        if (!productAdded) {
+            state.products.push({ ...product, quantity: 1 });
+        } else {
+            productAdded.quantity++;
         }
     },
     removeProductFromCart(state, product) {
@@ -21,6 +26,11 @@ export const mutations = {
     },
     clearCart(state) {
         state.products = [];
+    },
+    quantityChanged(state, payload) {
+        const product = state.products.find(elem =>
+            elem.id === payload.product.id);
+        product.quantity = payload.quantity;
     }
 };
 
@@ -36,6 +46,13 @@ export const actions = {
     },
     clearCart({ commit }) {
         commit('clearCart');
+    },
+    quantityChanged({ commit }, payload) {
+        if (+payload.quantity === 0) {
+            commit('removeProductFromCart', payload.product);
+            return;
+        }
+        commit('quantityChanged', payload);
     }
 };
 
@@ -51,7 +68,9 @@ export const getters = {
     },
     getProductsPrice(state) {
         if (state.products.length) {
-            const productsPrices = state.products.map(elem => parseFloat(elem.price));
+            const productsPrices = state.products.map(elem =>
+                parseFloat(elem.price) * elem.quantity
+            );
             const totalPrice = productsPrices.reduce((accumulator, elem) => {
                 return accumulator + elem;
             });
@@ -59,5 +78,9 @@ export const getters = {
         } else {
             return 0;
         }
+    },
+    getProductQuantity: (state) => (product) => {
+        const productToCheck = state.products.find(elem => elem.id === product.id);
+        return productToCheck ? productToCheck.quantity : 0;
     }
 };
