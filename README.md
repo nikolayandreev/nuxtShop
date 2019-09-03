@@ -1,6 +1,6 @@
 # nuxtShop
 
-> A playground project for basic eCommerce functionalities, like cart, filters and sorting of products.
+> A playground project using Nuxt.js for basic eCommerce functionalities, like cart, filters and sorting of products.
 
 ## Build Setup
 
