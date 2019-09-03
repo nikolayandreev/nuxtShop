@@ -12,7 +12,6 @@
         >
           {{category}}
         </ProductListFiltersItem>
-        {{selectedCategories}}
       </div>
     </div>
     <div class="filter-group">
@@ -26,7 +25,6 @@
         >
           {{manufacturer}}
         </ProductListFiltersItem>
-        {{selectedManufacturers}}
       </div>
     </div>
     <div class="filter-group">

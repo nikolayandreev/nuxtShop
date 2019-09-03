@@ -1,7 +1,7 @@
 {
-  "name": "List_v3",
+  "name": "nuxtShop",
   "version": "1.0.0",
-  "description": "My kryptonian Nuxt.js project",
+  "description": "A playground project for basic eCommerce functionalities, like cart, filters and sorting of products.",
   "author": "Nikolay Andreev",
   "private": true,
   "scripts": {
