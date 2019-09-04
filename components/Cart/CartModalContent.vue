@@ -59,4 +59,37 @@ export default {
     }
   }
 }
+.slide-down-enter {
+}
+.slide-down-enter-active {
+  animation: slide-down 0.3s ease-in-out forwards;
+  transition: all 0.3s;
+}
+.slide-down-leave-active {
+  animation: slide-up 0.3s ease-in-out forwards;
+  transition: all 0.3s;
+}
+@keyframes slide-up {
+  from {
+    height: auto;
+    overflow: hidden;
+  }
+  to {
+    height: 0px;
+    padding: 0 20px;
+    overflow: hidden;
+  }
+}
+@keyframes slide-down {
+  from {
+    height: 1px;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: height 0.3s;
+  }
+  to {
+    height: auto;
+    overflow: hidden;
+  }
+}
 </style>

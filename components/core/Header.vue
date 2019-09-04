@@ -26,11 +26,13 @@
           >
             <font-awesome-icon :icon="['fas', 'shopping-cart']" />
             Количка ({{cartProductsLength}})
-            <CartModalContent
-              v-if="showCart"
-              :productsPrice="productsPrice"
-              :cartProducts="cartProducts"
-            />
+            <transition name="slide-down">
+              <CartModalContent
+                v-if="showCart"
+                :productsPrice="productsPrice"
+                :cartProducts="cartProducts"
+              />
+            </transition>
           </div>
         </li>
       </ul>
