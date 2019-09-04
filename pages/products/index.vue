@@ -20,6 +20,13 @@ export default {
     filteredProducts() {
       return this.$store.getters["products/getFilteredProducts"];
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start();
+
+      setTimeout(() => this.$nuxt.$loading.finish(), 500);
+    });
   }
 };
 </script>
