@@ -49,4 +49,30 @@ body {
     font-family: "M PLUS Rounded 1c", sans-serif;
   }
 }
+.pageSlide-enter-active {
+  animation: slide-in 0.4s ease-out forwards;
+}
+.pageSlide-leave-active {
+  animation: slide-out 0.3s ease-out forwards;
+}
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
 </style>
