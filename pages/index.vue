@@ -21,6 +21,12 @@ export default {
 
       setTimeout(() => this.$nuxt.$loading.finish(), 500);
     });
+  },
+  head() {
+    return {
+      title: "Начало | nuxtShop",
+      description: "Тестов проект изработен на nuxt.js рефлектиращ едни от основните функционалности на eCommerce"
+    };
   }
 };
 </script>

@@ -84,6 +84,11 @@ export default {
 
       setTimeout(() => this.$nuxt.$loading.finish(), 500);
     });
+  },
+  head() {
+    return {
+      title: `${this.product.name} | nuxtShop`
+    };
   }
 };
 </script>
