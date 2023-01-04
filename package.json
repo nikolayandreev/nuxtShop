@@ -17,7 +17,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "nuxt-fontawesome": "^0.4.0",
     "v-owl-carousel": "^1.0.8"
   },
